@@ -41,6 +41,15 @@ freq2
 prop2<-prop.table(freq2)
 prop2
 
+#Split dataset 
+set.seed(821034)
+dummy_sep <-rbinom(nrow(Baltimore), 1, 0.5)
+Baltimore_a<- Baltimore[dummy_sep == 0,]
+Baltimore_b<- Baltimore[dummy_sep == 1,]
+
+
+
+
 
 
 

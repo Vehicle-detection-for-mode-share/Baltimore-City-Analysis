@@ -1,8 +1,10 @@
 #Install all the necessary pakages
 
 install.packages('tidyverse')
+install.packages("gmodels")
 library('dplyr')
 library(tidyverse)
+library(gmodels)
 
 # Firstly we import and view the dataset
 Baltimore <- read.csv('C:/Users/Mayowa/Documents/INTERNSHP/Baltimore_detections.csv')
@@ -13,6 +15,7 @@ Baltimore <- Baltimore[, -c(3,4,5,6,7)]
 
 #The first task is to create an ID column in other to uniquely identify duplicate image files
 Baltimore <- cbind(ID = 1:nrow(Baltimore), Baltimore)
+
 
 #The second task is to separate the variables in the labels column to multiple columns(Labels & Probability)
 
@@ -43,12 +46,59 @@ Baltimore_new %>%
   ))
 
 
+
 #Calculating the ratio of number of images with pedals with 250 images
 #Firstly we randomly extract 250 entries giving the subset a new name
 #Then we get the ratio 
 
 Baltimore2 <- sample_n(Baltimore_new, 250, replace = FALSE)
-round(prop.table(table(Baltimore2$Labels, useNA = "ifany")),4) 
+
+Baltimore_new2 <- anti_join(Baltimore_new, Baltimore2)# this is done to create another random set of data without including the one I had used previously
+
+Baltimore_new3 <- anti_join(Baltimore_new2, Baltimore3)
+
+Baltimore_new4 <- anti_join(Baltimore_new3, Baltimore4)
+
+Baltimore_new5 <- anti_join(Baltimore_new4, Baltimore5)
+
+Baltimore_new6 <- anti_join(Baltimore_new5, Baltimore6)
+
+Baltimore3 <- sample_n(Baltimore_new2, 500, replace = FALSE)
+
+Baltimore4 <- sample_n(Baltimore_new3, 2000, replace = FALSE)
+
+Baltimore5 <- sample_n(Baltimore_new4, 2500, replace = FALSE)
+
+Baltimore6 <- sample_n(Baltimore_new5, 3000, replace = FALSE)
+
+#Getting the ratios
+round(prop.table(table(Baltimore2$Labels, useNA = "ifany")),4)
+round(prop.table(table(Baltimore3$Labels, useNA = "ifany")),4)
+round(prop.table(table(Baltimore4$Labels, useNA = "ifany")),4)
+round(prop.table(table(Baltimore5$Labels, useNA = "ifany")),4)
+round(prop.table(table(Baltimore6$Labels, useNA = "ifany")),4)
+
+#Create temporary tables for each result
+set250 <- round(prop.table(table(Baltimore2$Labels, useNA = "ifany")),4)
+set500 <- round(prop.table(table(Baltimore3$Labels, useNA = "ifany")),4)
+set2000 <- round(prop.table(table(Baltimore4$Labels, useNA = "ifany")),4)
+set2500 <- round(prop.table(table(Baltimore5$Labels, useNA = "ifany")),4)
+set3000 <- round(prop.table(table(Baltimore6$Labels, useNA = "ifany")),4)
+set_last <- round(prop.table(table(Baltimore_new6$Labels, useNA = "ifany")),4)
+
+#View results for each category in one table
+rbind(set250, set500,set2000, set2500, set3000, set_last)
+
+#Put result in a table
+Baltimore_Ratios <- rbind(set250, set500,set2000, set2500, set3000, set_last)
+
+#Renaming columns
+colnames(Baltimore_Ratios)[3] <- "Unknown_Images"
+
+
+
+
+
 
 
 #Absolute frequency without missing values
@@ -80,17 +130,33 @@ Baltimore2 <- sample_n(Baltimore_new, 250, replace = FALSE)
 
 Baltimore_new2 <- anti_join(Baltimore_new, Baltimore2)# this is done to create another random set of data without including the one I had used previously
 
+Baltimore_new3 <- anti_join(Baltimore_new2, Baltimore3)
+
+Baltimore_new4 <- anti_join(Baltimore_new3, Baltimore4)
+
+Baltimore_new5 <- anti_join(Baltimore_new4, Baltimore5)
+
+Baltimore_new6 <- anti_join(Baltimore_new5, Baltimore6)
+
 Baltimore3 <- sample_n(Baltimore_new2, 500, replace = FALSE)
 
+Baltimore4 <- sample_n(Baltimore_new3, 2000, replace = FALSE)
+
+Baltimore5 <- sample_n(Baltimore_new4, 2500, replace = FALSE)
+
+Baltimore6 <- sample_n(Baltimore_new5, 3000, replace = FALSE)
+
+Baltimore7 <- sample_n(Baltimore_new6)
 
 
 
-
-
-
-
-
-
+CrossTable(table(Baltimore_new$Labels, Baltimore_new$Labels),
+           prop.r = TRUE, #add prop by row
+           prop.c=TRUE, #add prop by column
+           prop.t=TRUE, #remove prop by row
+           prop.chisq=FALSE, #remove chisq contribution
+           chisq=F, #add chisq to
+           format = "SPSS")
 
 
 

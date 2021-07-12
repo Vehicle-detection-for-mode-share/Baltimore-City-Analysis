@@ -92,10 +92,27 @@ rbind(set250, set500,set2000, set2500, set3000, set_last)
 #Put result in a table
 Baltimore_Ratios <- rbind(set250, set500,set2000, set2500, set3000, set_last)
 
-#Renaming columns
+#Renaming columns - Here i renamed the N/A column
 colnames(Baltimore_Ratios)[3] <- "Unknown_Images"
 
+#In order to plot my graph I need to have my sample sizes as one of my independent variables
+#the easiest way for me was to create a new column with the sample size first 
+#I created a temp tablethen I used the CBind function to merge it to the main table
 
+vec <- c('sz_250', 'sz_500', 'sz_2000', 'sz_2500', 'sz_3000','sz_others')
+
+Baltimore_Ratios2 <- Baltimore_Ratios
+
+Baltimore_Ratios2 <- cbind(Baltimore_Ratios2, sample_size = vec)
+
+#Convert Vector to Dataframe
+Baltimore_Ratios3 <- data.frame(Baltimore_Ratios2)
+
+Baltimore_Ratios3[ ,c(4, 1, 2, 3)] #Trying to rearrange my columns
+
+subset(Baltimore_Ratios3, select = c(4, 1, 2, 3))
+
+ggplot(Baltimore_Ratios3, aes(x = sample_size, y = motor))
 
 
 

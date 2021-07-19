@@ -34,20 +34,21 @@ Baltimore$Labels[Baltimore$Labels==""] <- NA
 
 #Create subsets of data 
 
-Balt_1 <- sample_n(Baltimore, 250, replace = TRUE)
-Balt_2 <- sample_n(Baltimore, 500, replace = TRUE)
-Balt_3 <- sample_n(Baltimore, 1000, replace = TRUE)
-Balt_4 <- sample_n(Baltimore, 1500, replace = TRUE)
-Balt_5 <- sample_n(Baltimore, 2000, replace = TRUE)
-Balt_6 <- sample_n(Baltimore, 2500, replace = TRUE)
-Balt_7 <- sample_n(Baltimore, 3000, replace = TRUE)
-Balt_8 <- sample_n(Baltimore, 4000, replace = TRUE)
-Balt_9 <- sample_n(Baltimore, 4500, replace = TRUE)
-Balt_10 <- sample_n(Baltimore, 5500, replace = TRUE)
-Balt_11 <- sample_n(Baltimore, 6000, replace = TRUE)
-Balt_12 <- sample_n(Baltimore, 6500, replace = TRUE)
-Balt_13 <- sample_n(Baltimore, 7000, replace = TRUE)
-Balt_14 <- sample_n(Baltimore, 8000, replace = TRUE)
+Balt_1 <- slice(Baltimore, 1:250)
+Balt_2 <- slice(Baltimore, 1:500)
+Balt_3 <- slice(Baltimore, 1:750)
+Balt_4 <- slice(Baltimore, 1:1000)
+Balt_5 <- slice(Baltimore, 1:1500)
+Balt_6 <- slice(Baltimore, 1:2000)
+Balt_7 <- slice(Baltimore, 1:2500)
+Balt_8 <- slice(Baltimore, 1:3000)
+Balt_9 <- slice(Baltimore, 1:3500)
+Balt_10 <- slice(Baltimore, 1:4000)
+Balt_11 <- slice(Baltimore, 1:5500)
+Balt_12 <- slice(Baltimore, 1:6500)
+Balt_13 <- slice(Baltimore, 1:7000)
+Balt_14 <- slice(Baltimore, 1:7500)
+Balt_15 <- slice(Baltimore, 1:8000)
 
 
 #Create temporary tables for the ratio of each category
@@ -65,10 +66,10 @@ S11 <- round(prop.table(table(Balt_11$Labels, useNA = "ifany")),4)
 S12 <- round(prop.table(table(Balt_12$Labels, useNA = "ifany")),4)
 S13 <- round(prop.table(table(Balt_13$Labels, useNA = "ifany")),4)
 S14 <- round(prop.table(table(Balt_14$Labels, useNA = "ifany")),4)
-
+S15 <- round(prop.table(table(Balt_15$Labels, useNA = "ifany")),4)
 
 #Put result in a table
-Bcity_Ratio <- rbind(S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14)
+Bcity_Ratio <- rbind(S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14, S15)
 
 #Convert Vector to Dataframe
 Bcity_Ratio <- data.frame(Bcity_Ratio)

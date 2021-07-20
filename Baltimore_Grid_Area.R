@@ -30,6 +30,13 @@ summary(Balt)
 
 #Getting the area
 
-Balt4_sf$area <- st_area (Balt4_sf)
+sqrt(250)
 
+Balt4_sf$Area <- Balt4_sf$GLOBE_P * sqrt(250)
 
+#Total sum of land area
+sum(Balt4_sf$Area)
+
+#Population Density
+
+sum (Balt4_sf$GLOBE_P) / sum(Balt4_sf$Area)
